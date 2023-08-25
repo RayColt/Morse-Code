@@ -221,7 +221,7 @@ namespace Morseform
 			this->main_textbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
 			this->main_textbox->ForeColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->main_textbox->Location = System::Drawing::Point(12, 53);
-			this->main_textbox->MaxLength = 5000;
+			this->main_textbox->MaxLength = 6666;
 			this->main_textbox->Multiline = true;
 			this->main_textbox->Name = L"main_textbox";
 			this->main_textbox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
