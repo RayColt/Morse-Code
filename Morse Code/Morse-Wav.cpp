@@ -128,7 +128,8 @@ private:
         double ampl = 32000.0; // amplitude 32KHz for digital sound (max height of wave)
         double pi = 3.1415926535897932384626433832795;
         double w = 2.0 * pi * Tone;
-        long i, n, size;
+        long i, n;
+            int size;
         static long seconds;
         if (MONO_STEREO == 1) // mono
         {
