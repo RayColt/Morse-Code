@@ -1,5 +1,0 @@
-C:\Windows\System32\msvcp140.dll
-C:\Windows\System32\ucrtbased.dll
-C:\Windows\System32\vcruntime140.dll
-
-https://aka.ms/vs/17/release/vc_redist.x86.exe
