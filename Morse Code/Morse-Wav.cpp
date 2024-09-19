@@ -183,7 +183,7 @@ private:
 
 private:
     /**
-    * Define dit, dah, end of letter, end of word. 
+    * Define dit, dah, end of letter, end of word.
     *
     * The rules of 1/3/7 and 1/2/4(more suitable for common microphones, like webcams and phones):
     * Morse code is: tone for one unit (dit) or three units (dah)
