@@ -173,8 +173,8 @@ private:
                     size = (seconds * sizeof buffer_pcm * Sps);
                     buffer_pcm = reallocate_PCM16_stereo_buffer(buffer_pcm, size);
                 }
-                pcm_count++;
                 // generate one point on the sine wave for left and right
+                pcm_count++;
                 buffer_pcm[pcm_count].left = (int16_t)(on_off * ampl * sin(w * t));
                 buffer_pcm[pcm_count].right = (int16_t)(on_off * ampl * sin(w * t));
             }
