@@ -129,7 +129,7 @@ private:
         double pi = 3.1415926535897932384626433832795;
         double w = 2.0 * pi * Tone;
         long i, n;
-            int size;
+        int size;
         static long seconds;
         if (MONO_STEREO == 1) // mono
         {
@@ -155,7 +155,6 @@ private:
             double t = (double)i / Sps;
             if (MONO_STEREO == 1) // MONO
             {
-                double t = (double)i / Sps;
                 if (pcm_count == Sps * seconds)
                 {
                     seconds++;
@@ -163,7 +162,8 @@ private:
                     buffer_mono_pcm = reallocate_PCM16_mono_buffer(buffer_mono_pcm, size);
                 }
                 // generate one point on the sine wave
-                buffer_mono_pcm[pcm_count++].speaker = (int16_t)(on_off * ampl * sin(w * t));
+                pcm_count++;
+                buffer_mono_pcm[pcm_count].speaker = (int16_t)(on_off * ampl * sin(w * t));
             }
             else // STEREO
             {
