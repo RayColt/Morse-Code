@@ -3,6 +3,8 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_APP_FILE" Value="[#MorseCode.exe]"/>
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_MorseCode.exe_1" Value="..\Release"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_MorseCode.exe_1" Value="Morse Code.exe"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="CTRLS" Value="2"/>
@@ -28,6 +30,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="MorseCode_Dir" Directory_Parent="APPDIR" DefaultDir="MORSEC~1|Morse Code"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
@@ -38,6 +41,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{F935DE36-2D57-40EA-A117-99239653F2EC}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="MorseCode.exe" ComponentId="{DDDAB2F8-4A40-4990-AE49-02F020D82795}" Directory_="APPDIR" Attributes="0" KeyPath="MorseCode.exe"/>
+    <ROW Component="MorseCode_PrimaryOutput" ComponentId="{468F7162-AC3A-48FA-AC7A-21FAE97A81E7}" Directory_="MorseCode_Dir" Attributes="0" KeyPath="MorseCode.exe_1"/>
     <ROW Component="ProductInformation" ComponentId="{DB2783A5-6B74-4128-8E3F-8C5FDBA32E98}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{B17205A7-2DE9-4A57-A2FA-EC76ECDF3AF6}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="System.Data.dll" ComponentId="{9434C134-52FA-45CA-8776-82C70AAC9D2B}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.dll"/>
@@ -60,6 +64,10 @@
     <ROW File="System.Data.dll" Component_="System.Data.dll" FileName="SYSTEM~4.DLL|System.Data.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.dll" SelfReg="false"/>
     <ROW File="System.dll" Component_="System.dll" FileName="System.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll" SelfReg="false"/>
     <ROW File="MorseCode.pdb" Component_="MorseCode.exe" FileName="MORSEC~1.PDB|Morse Code.pdb" Attributes="0" SourcePath="..\Release\Morse Code.pdb" SelfReg="false"/>
+    <ROW File="MorseCode.exe_1" Component_="MorseCode_PrimaryOutput" FileName="MORSEC~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_MorseCode.exe_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_MorseCode.exe_1&gt;" SelfReg="false" DigSign="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
+    <ROW Name="AI_APPPATH_PERBUILD_MorseCode.exe_1" Path="[|AI_PROPPATH_DIR_PERBUILD_MorseCode.exe_1]\[|AI_PROPPATH_FILENAME_PERBUILD_MorseCode.exe_1]" Type="2" Content="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="x86_Release" BuildName="x86_Release" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4" UseLargeSchema="true"/>
@@ -141,6 +149,7 @@
     <ROW Feature_="MainFeature" Component_="System.Data.dll"/>
     <ROW Feature_="MainFeature" Component_="System.dll"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
+    <ROW Feature_="MainFeature" Component_="MorseCode_PrimaryOutput"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -172,6 +181,7 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="MorseCode" Directory_="SHORTCUTDIR" Name="MORSEC~1|Morse Code" Component_="MorseCode_PrimaryOutput" Target="[#MorseCode.exe_1]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
     <ROW Shortcut="MorseCode.exe" Directory_="SHORTCUTDIR" Name="MORSEC~1.EXE|Morse Code.exe" Component_="MorseCode.exe" Target="[#MorseCode.exe]" Description="Morse Code.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="MorseCode.exe_1" Directory_="DesktopFolder" Name="MORSEC~1.EXE|Morse Code.exe" Component_="MorseCode.exe" Target="[#MorseCode.exe]" Description="Morse Code.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
@@ -181,5 +191,8 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.VsProjectComponent">
+    <ROW ProjectId="{a9a2af5c-7340-4869-971d-92c93cc4bf3d}" ProjectName="Morse Code" OutputGroup="PrimaryOutput" OutputFile="MorseCode.exe_1" OutputFileShortcut="MorseCode"/>
   </COMPONENT>
 </DOCUMENT>
