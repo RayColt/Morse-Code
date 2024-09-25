@@ -4,14 +4,22 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Morse Code", "Morse Code\Morse Code.vcxproj", "{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}"
 EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "setup", "setup\setup.aiproj", "{69D2549D-2CBF-4C85-B01C-4861D32447BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|x64 = All|x64
+		All|x86 = All|x86
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.All|x64.ActiveCfg = Release|x64
+		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.All|x64.Build.0 = Release|x64
+		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.All|x86.ActiveCfg = Debug|Win32
+		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.All|x86.Build.0 = Debug|Win32
 		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.Debug|x64.ActiveCfg = Debug|x64
 		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.Debug|x64.Build.0 = Debug|x64
 		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.Debug|x86.ActiveCfg = Release|Win32
@@ -20,6 +28,18 @@ Global
 		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.Release|x64.Build.0 = Debug|Win32
 		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.Release|x86.ActiveCfg = Release|Win32
 		{A9A2AF5C-7340-4869-971D-92C93CC4BF3D}.Release|x86.Build.0 = Release|Win32
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.All|x64.ActiveCfg = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.All|x64.Build.0 = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.All|x86.ActiveCfg = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.All|x86.Build.0 = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Debug|x64.ActiveCfg = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Debug|x64.Build.0 = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Debug|x86.ActiveCfg = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Debug|x86.Build.0 = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Release|x64.ActiveCfg = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Release|x64.Build.0 = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Release|x86.ActiveCfg = x86_Release
+		{69D2549D-2CBF-4C85-B01C-4861D32447BE}.Release|x86.Build.0 = x86_Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
