@@ -434,7 +434,8 @@ namespace Morseform
 			this->Controls->Add(this->main_textbox);
 			this->Controls->Add(this->menuStrip1);
 			this->ForeColor = System::Drawing::SystemColors::HighlightText;
-			this->Icon = gcnew System::Drawing::Icon(L"D:\\Repos\\Morse Code\\Morse Code\\app.ico");
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->MaximumSize = System::Drawing::Size(624, 433);
 			this->MinimumSize = System::Drawing::Size(624, 433);
