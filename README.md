@@ -1,5 +1,5 @@
 # Morse Code
-current version: 1.17
+current version: 1.16
 
 <br>
 Please change the Icon line below in all three Forms into your own local url's to have an icon in the left corner

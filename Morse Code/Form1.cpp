@@ -440,7 +440,7 @@ namespace Morseform
 			this->MaximumSize = System::Drawing::Size(624, 433);
 			this->MinimumSize = System::Drawing::Size(624, 433);
 			this->Name = L"Form1";
-			this->Text = L"Morse Code 1.17";
+			this->Text = L"Morse Code 1.16";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
@@ -449,6 +449,7 @@ namespace Morseform
 			this->text_modus_groupbox->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	private: System::Void modus_listBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
