@@ -85,7 +85,7 @@ public:
         Tone = tone;
         Sps = samples_per_second;
         // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
-        Eps = Wpm / 1.2;    // elements per second (frequency of morse coding) 
+        Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
         Bit = 1.2 / Wpm;    // seconds per element (period of morse coding)
         /*
         printf("wave: %9.3lf Hz (-sps:%lg)\n", Sps, Sps);
