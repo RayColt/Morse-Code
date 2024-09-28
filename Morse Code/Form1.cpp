@@ -449,7 +449,6 @@ namespace Morseform
 			this->text_modus_groupbox->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 #pragma endregion
 	private: System::Void modus_listBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
