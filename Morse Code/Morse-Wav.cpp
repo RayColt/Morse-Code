@@ -136,7 +136,7 @@ private:
             if (buffer_mono_pcm == NULL)
             {
                 seconds = 1;
-                size = (seconds * sizeof(short) * Sps);
+                size = (seconds * sizeof(int16_t) * Sps);
                 buffer_mono_pcm = allocate_PCM16_mono_buffer(size);
             }
         }
@@ -145,7 +145,7 @@ private:
             if (buffer_pcm == NULL)
             {
                 seconds = 1;
-                size = (seconds * sizeof(short) * Sps);
+                size = (seconds * sizeof(int16_t) * Sps);
                 buffer_pcm = allocate_PCM16_stereo_buffer(size);
             }
         }
@@ -158,7 +158,7 @@ private:
                 if (pcm_count == Sps * seconds)
                 {
                     seconds++;
-                    size = (seconds * sizeof(short) * Sps);
+                    size = (seconds * sizeof(int16_t) * Sps);
                     buffer_mono_pcm = reallocate_PCM16_mono_buffer(buffer_mono_pcm, size);
                 }
                 // generate one point on the sine wave
@@ -169,7 +169,7 @@ private:
                 if (pcm_count == Sps * seconds)
                 {
                     seconds++;
-                    size = (seconds * sizeof(short) * Sps);
+                    size = (seconds * sizeof(int16_t) * Sps);
                     buffer_pcm = reallocate_PCM16_stereo_buffer(buffer_pcm, size);
                 }
                 // generate one point on the sine wave for left and right
