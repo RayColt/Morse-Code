@@ -117,7 +117,7 @@ public:
 
 private:
     /**
-    * Get binary morse code (dit/dah) for a given character.
+    * Get binary morse code (dit/dah) for a given character. 
     * Generate one quantum of silence or tone in PCM/WAV array.
     * sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate
     *
