@@ -102,6 +102,7 @@ namespace Morseform
 			this->PerformLayout();
 
 		}
+
 	private: System::Void Form3_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	};
