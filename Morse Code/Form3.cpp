@@ -36,6 +36,7 @@ namespace Morseform
 
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Form3::typeid));
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -63,12 +64,12 @@ namespace Morseform
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"5x8 LCD HD44780U A02", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::SystemColors::HighlightText;
 			this->label1->Location = System::Drawing::Point(18, 158);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(230, 20);
+			this->label1->Size = System::Drawing::Size(184, 20);
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"COLT\'S MORSE 2022";
 			// 
@@ -83,13 +84,14 @@ namespace Morseform
 			// 
 			// Form3
 			// 
-			this->Icon = gcnew System::Drawing::Icon(L"D:\\Repos\\Morse Code\\Morse Code\\app.ico");
 			this->BackColor = System::Drawing::SystemColors::Desktop;
 			this->ClientSize = System::Drawing::Size(266, 183);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximumSize = System::Drawing::Size(282, 222);
 			this->MinimumSize = System::Drawing::Size(282, 222);
 			this->Name = L"Form3";

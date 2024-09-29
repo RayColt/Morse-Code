@@ -720,15 +720,6 @@ namespace Morseform
 	{
 		//txt
 		int text_length = this->main_textbox->TextLength;
-		// could not find how to change bar color
-		/*
-		if (text_length == 500)
-		{
-			this->textbox_progressbar->BackColor = Color::Yellow;
-		}
-		if (text_length > 3500)
-			this->textbox_progressbar->BackColor = Color::Red;
-		*/
 		double max_char = this->main_textbox->MaxLength;
 		double left_over = max_char - text_length;
 		this->progress_bar_label->Text = msclr::interop::marshal_as<System::String^>(to_string(text_length));
@@ -737,13 +728,6 @@ namespace Morseform
 
 		//audio
 		max_char = 750;//advised max
-		// could not find how to change bar color
-		/*
-		if (text_length > 500)
-			this->audio_progressbar->BackColor = Color::Yellow;
-		if (text_length == max_char)
-			this->audio_progressbar->BackColor = Color::Red;
-		*/
 		if (text_length <= max_char)
 			left_over = max_char - text_length;
 		else left_over = 0;
