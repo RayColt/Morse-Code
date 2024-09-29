@@ -135,8 +135,8 @@ namespace Morseform
 			this->menuStrip1->BackColor = System::Drawing::SystemColors::Desktop;
 			this->menuStrip1->ForeColor = System::Drawing::SystemColors::HighlightText;
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-				this->fileToolStripMenuItem,
-					this->helpToolStripMenuItem, this->aboutToolStripMenuItem
+			this->fileToolStripMenuItem,
+			this->helpToolStripMenuItem, this->aboutToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -149,8 +149,8 @@ namespace Morseform
 			this->fileToolStripMenuItem->BackColor = System::Drawing::SystemColors::Desktop;
 			this->fileToolStripMenuItem->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-				this->openFileToolStripMenuItem,
-					this->saveAsToolStripMenuItem, this->exitToolStripMenuItem
+			this->openFileToolStripMenuItem,
+			this->saveAsToolStripMenuItem, this->exitToolStripMenuItem
 			});
 			this->fileToolStripMenuItem->ForeColor = System::Drawing::SystemColors::HighlightText;
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
