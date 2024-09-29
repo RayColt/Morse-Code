@@ -1,9 +1,9 @@
 # Morse Code
-current version: 1.16
+current version: 1.16, To use the excecutable you must have installed Visual Studio Community 22, who contains the necessary dll's to run it. https://visualstudio.microsoft.com/vs/community/ 
 
 <br>
 Please change the Icon line below in all three Forms into your own local url's to have an icon in the left corner
-<br> and even more important to have no errors or exceptions while opening the form creator of the extension "C++/CLR Windows Forms for Visual Studio 2019". Install this extension before opening the sln file in Visual Studio 2019.<br><br>
+<br> and even more important to have no errors or exceptions while opening the form creator of the extension "C++/CLR Windows Forms for Visual Studio 2019". Install this extension before opening the sln file in Visual Studio.<br><br>
 so change <br><code>
 this-&gt;Icon = (cli::safe_cast&lt;System::Drawing::Icon^&gt;(resources-&gt;GetObject(L&quot;$this.Icon&quot;)));</code><br>
 into tour own url's, in Form1.cpp, Form2.cpp, Form3.cpp<br><code>
