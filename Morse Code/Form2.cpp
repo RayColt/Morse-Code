@@ -87,12 +87,10 @@ namespace Morseform
 			this->PerformLayout();
 
 		}
-
 		private: System::Void help_textBox_TextChanged(System::Object^ sender, System::EventArgs^ e)
 		{
 
 		}
-
 		private: System::Void Form2_Load(System::Object^ sender, System::EventArgs^ e) 
 		{
 			this->help_textBox->Text = helptxt;

@@ -736,28 +736,22 @@ namespace Morseform
 		else progress = 100;
 		this->audio_progressbar->Value = (int)progress;
 	}
-
 	private: System::Void exit_menu_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		exit(0);
 	}
-
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 	}
-
 	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e)
 	{
 	}
-
 	private: System::Void label6_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 	}
-
 	private: System::Void groupBox1_Enter(System::Object^ sender, System::EventArgs^ e)
 	{
 	}
-
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
 		this->modus_listBox->SelectedIndex = 1;
 		this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)tone_hz));
