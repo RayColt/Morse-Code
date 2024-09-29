@@ -91,7 +91,7 @@ namespace Morseform
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Icon = gcnew System::Drawing::Icon(L"D:\\Repos\\Morse Code\\Morse Code\\app.ico");
 			this->MaximumSize = System::Drawing::Size(282, 222);
 			this->MinimumSize = System::Drawing::Size(282, 222);
 			this->Name = L"Form3";
