@@ -7,7 +7,7 @@
 
 using namespace std;
 /**
-* C++ Baudot Class
+* C++ Telex Baudot Class
 * UNDER CONSTRUCTION
 */
 class Baudot
