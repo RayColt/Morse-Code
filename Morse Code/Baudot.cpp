@@ -81,9 +81,9 @@ private:
         baudot_map.insert(pair <string, string>( "=", "01001"));
 
         // invert baudot_map
-        for (const auto& it : baudot_map)
+        for (const auto& im : baudot_map)
         {
-            baudot_map_reversed.insert(make_pair(it.second, it.first));
+            baudot_map_reversed.insert(make_pair(im.second, im.first));
         }
     }
 };

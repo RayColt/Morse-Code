@@ -108,9 +108,9 @@ private:
 		morse_map.insert(pair <string, string>("_", "001101"));  // ..--.-
 		morse_map.insert(pair <string, string>("ERR", "00000000")); // ........
 		// invert morse_map
-		for (const auto& it : morse_map)
+		for (const auto& im : morse_map)
 		{
-			morse_map_reversed.insert(make_pair(it.second, it.first));
+			morse_map_reversed.insert(make_pair(im.second, im.first));
 		}
 	}
 
