@@ -14,10 +14,7 @@ class Baudot
 {
 
 public:
-    Baudot() 
-    {
-    
-    }
+    Baudot() { fill_BaudotMap(); }
 
 private:
     multimap<string, string> baudot_map;
