@@ -6,7 +6,10 @@
 #include <string>
 
 using namespace std;
-
+/**
+* C++ Baudot Class
+* UNDER CONSTRUCTION
+*/
 class Baudot
 {
 
