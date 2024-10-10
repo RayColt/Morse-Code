@@ -33,9 +33,6 @@
     <ClCompile Include="Form3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Baudot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

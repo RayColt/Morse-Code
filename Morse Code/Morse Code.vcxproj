@@ -132,7 +132,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Baudot.cpp" />
     <ClCompile Include="Form2.cpp">
       <FileType>CppForm</FileType>
     </ClCompile>

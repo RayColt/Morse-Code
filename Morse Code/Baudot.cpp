@@ -86,4 +86,75 @@ private:
             baudot_map_reversed.insert(make_pair(im.second, im.first));
         }
     }
+/*////////////////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <cstdint>
+
+    // Wav file header structure
+    struct WAVHeader {
+        char riff[4] = { 'R', 'I', 'F', 'F' };
+        uint32_t overall_size;
+        char wave[4] = { 'W', 'A', 'V', 'E' };
+        char fmt_chunk_marker[4] = { 'f', 'm', 't', ' ' };
+        uint32_t length_of_fmt = 16;
+        uint16_t format_type = 1;
+        uint16_t channels = 1;
+        uint32_t sample_rate = 8000;
+        uint32_t byterate;
+        uint16_t block_align;
+        uint16_t bits_per_sample = 8;
+        char data_chunk_header[4] = { 'd', 'a', 't', 'a' };
+        uint32_t data_size;
+    };
+
+    // Generates a sine wave tone for a given frequency and duration
+    // the sine function returns values between -1 and 1, (sample + 1.0) shifts the range to 0 to 2. 
+    // Multiplying by 127.5 scales this range to 0 to 255, which fits the range of an 8-bit unsigned integer (uint8_t).
+    void generateTone(std::ofstream& file, double frequency, double duration, uint32_t sample_rate) {
+        uint32_t num_samples = sample_rate * duration;
+        for (uint32_t i = 0; i < num_samples; ++i) {
+            double sample = sin(2.0 * M_PI * frequency * i / sample_rate);
+            uint8_t sample_value = static_cast<uint8_t>((sample + 1.0) * 127.5);
+            file.write(reinterpret_cast<const char*>(&sample_value), sizeof(sample_value));
+        }
+    }
+
+    int main() {
+        std::ofstream file("baudot.wav", std::ios::binary);
+
+        WAVHeader header;
+        header.sample_rate = 8000;
+        header.byterate = header.sample_rate * header.channels * header.bits_per_sample / 8;
+        header.block_align = header.channels * header.bits_per_sample / 8;
+
+        // Estimate data size (for simplicity)
+        header.data_size = 8000 * 5; // 5 seconds of audio
+        header.overall_size = header.data_size + 36;
+
+        file.write(reinterpret_cast<const char*>(&header), sizeof(header));
+
+        double duration = 0.1; // Each tone duration (in seconds)
+        Baudot tones are typically around 1100 Hz for marking (1) and 1500 Hz for spacing (0)
+
+        double frequencies[] = { 1500, 1100 }; // Example frequencies for '0' and '1'
+
+        // Example Baudot sequence (binary)
+        int sequence[] = { 0, 1, 0, 1, 1, 0, 1, 0, 1 };
+
+        for (int bit : sequence) {
+            generateTone(file, frequencies[bit], duration, header.sample_rate);
+        }
+
+        file.close();
+        std::cout << "Generated baudot.wav file" << std::endl;
+
+        return 0;
+    }
+    This code sets up a basic WAV file and generates tones for '0' and '1' at 1000 Hz and 1400 Hz, respectively, 
+    with each tone lasting 0.1 seconds. The sequence array represents a simple Baudot-like sequence. 
+    You can modify the frequencies and duration as needed. 
+    Have fun experimenting with it!
+    */
 };
