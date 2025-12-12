@@ -110,6 +110,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <CompileAsManaged>true</CompileAsManaged>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

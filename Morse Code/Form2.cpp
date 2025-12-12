@@ -76,7 +76,7 @@ namespace Morseform
 			this->ClientSize = System::Drawing::Size(608, 394);
 			this->Controls->Add(this->help_textBox);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Icon = gcnew System::Drawing::Icon(L"D:\\Repos\\Morse Code\\Morse Code\\app.ico");
+			this->Icon = gcnew System::Drawing::Icon(L"app.ico");
 			this->MaximumSize = System::Drawing::Size(624, 433);
 			this->MinimumSize = System::Drawing::Size(624, 433);
 			this->Name = L"Form2";

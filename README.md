@@ -7,7 +7,7 @@ Please change the Icon line below in all three Forms into your own local url's t
 so change <br><code>
 this-&gt;Icon = (cli::safe_cast&lt;System::Drawing::Icon^&gt;(resources-&gt;GetObject(L&quot;$this.Icon&quot;)));</code><br>
 into tour own url's, in Form1.cpp, Form2.cpp, Form3.cpp<br><code>
-this-&gt;Icon = gcnew System::Drawing::Icon(L&quot;D:\\Repos\\Morse Code\\Morse Code\\app.ico&quot;);</code>
+this-&gt;Icon = gcnew System::Drawing::Icon(L&quot;app.ico&quot;);</code>
 
 <br><br>
 A windows version of <a href="https://github.com/RayColt/morse">my console C++ morse app</a>. Listen to homemade morse files with, for example, the android ggmorse app:
