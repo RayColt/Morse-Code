@@ -2,8 +2,8 @@
 #include <iostream>
 #include <windows.h>
 #include <msclr\marshal_cppstd.h>
-#include "Morse.cpp"
-#include "Morse-Wav.cpp"
+#include "Morse.h"
+#include "MorseWav.h"
 #include "Form2.cpp"
 #include "Form3.cpp"
 /**
@@ -435,12 +435,11 @@ namespace Morseform
 			this->Controls->Add(this->menuStrip1);
 			this->ForeColor = System::Drawing::SystemColors::HighlightText;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Icon = gcnew System::Drawing::Icon(L"app.ico");
 			this->MainMenuStrip = this->menuStrip1;
 			this->MaximumSize = System::Drawing::Size(624, 433);
 			this->MinimumSize = System::Drawing::Size(624, 433);
 			this->Name = L"Form1";
-			this->Text = L"Morse Code 1.16";
+			this->Text = L"Morse Code 1.17";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
@@ -500,7 +499,7 @@ namespace Morseform
 				str += this->main_textbox->Lines[i] + "  ";
 			}
 			string str_unmanaged = msclr::interop::marshal_as<std::string>(str); // String^ to string
-			morse = m->bin_morse_hexadecimal(str_unmanaged, 0);
+			morse = m->bin_morse_hexdecimal(str_unmanaged, 0);
 			morse.resize(this->main_textbox->MaxLength);
 			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
 		}
@@ -512,7 +511,7 @@ namespace Morseform
 				str += this->main_textbox->Lines[i] + "  ";
 			}
 			string str_unmanaged = msclr::interop::marshal_as<std::string>(str); // String^ to string
-			morse = m->bin_morse_hexadecimal(str_unmanaged, 1);
+			morse = m->bin_morse_hexdecimal(str_unmanaged, 1);
 			morse.resize(this->main_textbox->MaxLength);
 			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
 		}
@@ -544,7 +543,7 @@ namespace Morseform
 				str += this->main_textbox->Lines[i] + "  ";
 			}
 			string str_unmanaged = msclr::interop::marshal_as<std::string>(str); // String^ to string
-			morse = m->hexadecimal_bin_txt(str_unmanaged, 0);
+			morse = m->hexdecimal_bin_txt(str_unmanaged, 0);
 			morse.resize(this->main_textbox->MaxLength);
 			if (morse.compare("INPUT-ERROR") != 0)
 				this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
@@ -558,7 +557,7 @@ namespace Morseform
 				str += this->main_textbox->Lines[i] + "  ";
 			}
 			string str_unmanaged = msclr::interop::marshal_as<std::string>(str); // String^ to string
-			morse = m->hexadecimal_bin_txt(str_unmanaged, 1);
+			morse = m->hexdecimal_bin_txt(str_unmanaged, 1);
 			morse.resize(this->main_textbox->MaxLength);
 			if (morse.compare("INPUT-ERROR") != 0)
 				this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
@@ -581,10 +580,10 @@ namespace Morseform
 			morse.resize(this->main_textbox->MaxLength);
 			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
 			check_sound_settings();
-			string filename = "morse";
+			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			MorseWav mw = MorseWav(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, true, 2);
+			MorseWav mw = MorseWav(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
@@ -606,10 +605,10 @@ namespace Morseform
 			morse.resize(this->main_textbox->MaxLength);
 			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
 			check_sound_settings();
-			string filename = "morse";
+			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			MorseWav mw = MorseWav(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, true, 1);
+			MorseWav mw = MorseWav(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);

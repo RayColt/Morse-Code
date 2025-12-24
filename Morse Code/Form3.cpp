@@ -72,6 +72,7 @@ namespace Morseform
 			this->label1->Size = System::Drawing::Size(184, 20);
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"COLT\'S MORSE 2022";
+			this->label1->Click += gcnew System::EventHandler(this, &Form3::label1_Click);
 			// 
 			// textBox2
 			// 
@@ -91,7 +92,6 @@ namespace Morseform
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Icon = gcnew System::Drawing::Icon(L"app.ico");
 			this->MaximumSize = System::Drawing::Size(282, 222);
 			this->MinimumSize = System::Drawing::Size(282, 222);
 			this->Name = L"Form3";
@@ -103,6 +103,8 @@ namespace Morseform
 
 		}
 	private: System::Void Form3_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	};
 }

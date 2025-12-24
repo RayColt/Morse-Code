@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <ProjectGuid>{a9a2af5c-7340-4869-971d-92c93cc4bf3d}</ProjectGuid>
     <TargetFrameworkVersion>4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
@@ -109,7 +109,7 @@
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <CompileAsManaged>true</CompileAsManaged>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -148,7 +148,6 @@
     </ClCompile>
     <ClCompile Include="Morse.cpp" />
     <ClCompile Include="MorseWav.cpp" />
-    <ClCompile Include="Dir.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -169,10 +168,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dir.h" />
+    <Image Include="app.ico">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="help.h" />
     <ClInclude Include="morse.h" />
     <ClInclude Include="morsewav.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Morse Code.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
