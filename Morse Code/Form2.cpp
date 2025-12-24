@@ -34,7 +34,6 @@ namespace Morseform
 
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Form2::typeid));
 			this->help_textBox = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
@@ -48,6 +47,7 @@ namespace Morseform
 			this->help_textBox->Multiline = true;
 			this->help_textBox->Name = L"help_textBox";
 			this->help_textBox->ReadOnly = true;
+			this->help_textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->help_textBox->Size = System::Drawing::Size(584, 370);
 			this->help_textBox->TabIndex = 0;
 			this->help_textBox->TabStop = false;
@@ -76,7 +76,16 @@ namespace Morseform
 		private: System::Void Form2_Load(System::Object^ sender, System::EventArgs^ e)
 		{
 			std::string helpText = ::Help::GetHelpTxt();
+
+			// Create managed string
 			System::String^ managedHelpText = gcnew System::String(helpText.c_str());
+
+			// Normalize line endings: convert LF to platform newline (CRLF on Windows)
+			managedHelpText = managedHelpText->Replace("\n", System::Environment::NewLine);
+
+			// If  source contains literal backslash-n sequences ("\\n"), unescape them too
+			managedHelpText = managedHelpText->Replace("\\n", System::Environment::NewLine);
+
 			this->help_textBox->Text = managedHelpText;
 		}
 	};
