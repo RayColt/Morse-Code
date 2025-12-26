@@ -1,10 +1,4 @@
 #pragma once
-#include <windows.h>
-#include <iostream>
-#include <string>
-#include <sys/stat.h>
-#include <cstdlib>
-#include <direct.h>
 
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0601
@@ -12,6 +6,12 @@
 
 #define MKDIR(path) _mkdir(path)
 
+#include <windows.h>
+#include <iostream>
+#include <string>
+#include <sys/stat.h>
+#include <cstdlib>
+#include <direct.h>
 class Dir
 {
 	public:
