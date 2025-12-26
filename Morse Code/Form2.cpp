@@ -43,12 +43,12 @@ namespace Morseform
 			this->help_textBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->help_textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
 			this->help_textBox->ForeColor = System::Drawing::SystemColors::Window;
-			this->help_textBox->Location = System::Drawing::Point(12, 12);
+			this->help_textBox->Location = System::Drawing::Point(12, 0);
 			this->help_textBox->Multiline = true;
 			this->help_textBox->Name = L"help_textBox";
 			this->help_textBox->ReadOnly = true;
 			this->help_textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->help_textBox->Size = System::Drawing::Size(584, 370);
+			this->help_textBox->Size = System::Drawing::Size(596, 395);
 			this->help_textBox->TabIndex = 0;
 			this->help_textBox->TabStop = false;
 			this->help_textBox->Text = L"Colt\'s Morse Manual\r\n\r\n";
@@ -62,7 +62,6 @@ namespace Morseform
 			this->MaximumSize = System::Drawing::Size(624, 433);
 			this->MinimumSize = System::Drawing::Size(624, 433);
 			this->Name = L"Form2";
-			this->Opacity = 0.9;
 			this->Text = L"Help";
 			this->Load += gcnew System::EventHandler(this, &Form2::Form2_Load);
 			this->ResumeLayout(false);

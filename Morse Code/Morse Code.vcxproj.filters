@@ -36,16 +36,11 @@
     <ClCompile Include="Morse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="app.ico">
+    <ClCompile Include="Dir.cpp">
       <Filter>Source Files</Filter>
-    </Image>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="help.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -55,10 +50,8 @@
     <ClInclude Include="morsewav.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Morse Code.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClInclude Include="dir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

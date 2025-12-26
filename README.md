@@ -2,9 +2,9 @@
 current version: 1.17
 
 
-A windows version of <a href="https://github.com/RayColt/morse">my console C++ morse app</a>. Listen to homemade morse files with, for example, the android ggmorse app:
+A windows version of <a href="https://github.com/RayColt/MorseCmdWin">my console C++ morse app</a>. <br>Listen to homemade morse files with, for example, the android ggmorse app:
 <br>
-<a href="https://github.com/RayColt/morse/tree/master/cpp"><img src=https://github.com/RayColt/morse/blob/master/cpp/colt-morse.jpg></a>  
+<img src=https://github.com/RayColt/morse/blob/master/cpp/colt-morse.jpg>  
 
 The real, first and only US Morse mapping,<br>
       based upon Synthesizer Binary tables, from a mouse his vocal cords I believe,<br>
