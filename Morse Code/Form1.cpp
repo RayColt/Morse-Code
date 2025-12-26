@@ -448,7 +448,6 @@ namespace Morseform
 			this->text_modus_groupbox->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 #pragma endregion
 	private: System::Void modus_listBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
@@ -751,7 +750,8 @@ namespace Morseform
 	private: System::Void groupBox1_Enter(System::Object^ sender, System::EventArgs^ e)
 	{
 	}
-	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) 
+	{
 		this->modus_listBox->SelectedIndex = 1;
 		this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)tone_hz));
 		this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));

@@ -304,7 +304,7 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
         {
             Dir::CreateDirectories(dirPath);
         }
-        catch (const std::exception& e)
+        catch (const exception& e)
         {
             cerr << "Directory creation failed: " << e.what() << '\n';
             exit(1);
