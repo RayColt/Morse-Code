@@ -311,8 +311,6 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
         }
     }
 
-    cout << "Directory OK: " << dirPath << endl;
-
 #pragma warning(suppress : 4996)
     file = fopen(path, "wb");
     if (file == NULL) 
