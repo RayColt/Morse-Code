@@ -31,9 +31,9 @@ typedef struct PCM16_mono_s
 class MorseWav
 {
 private:
-/**
-* Instance variables
-*/
+	/**
+	* member variables
+	*/
 #define EPW 50      // elements per word (definition)
 	const char* MorseCode; // string array with morse
 	int Debug;      // debug mode
