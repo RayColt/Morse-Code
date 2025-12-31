@@ -582,7 +582,9 @@ namespace Morseform
 			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);// a construct directly
+			// a direct construction of the MorseWav object
+			// avoids the temporary and avoids shallow copying
+			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
@@ -611,7 +613,9 @@ namespace Morseform
 			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);// a construct directly
+			// a direct construction of the MorseWav object
+			// avoids the temporary and avoids shallow copying
+			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
