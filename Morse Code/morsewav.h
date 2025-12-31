@@ -64,11 +64,7 @@ public:
 	/**
 	* Destructor
 	*/
-	~MorseWav()
-	{
-		delete[] buffer_pcm;
-		delete[] buffer_mono_pcm;
-	}
+	~MorseWav() = default; // everything is freed automatically
 
 private:
 	/**
