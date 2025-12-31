@@ -1,5 +1,5 @@
 # Morse Code
-current version: 1.18
+current version: 1.19
 
 
 A windows version of <a href="https://github.com/RayColt/MorseCmdWin">my console C++ morse app</a>. <br>Listen to homemade morse files with, for example, the android ggmorse app:

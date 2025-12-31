@@ -72,8 +72,8 @@ namespace Morseform
 		System::Windows::Forms::Label^ progress_bar_label;
 		System::Windows::Forms::ProgressBar^ audio_progressbar;
 		int modus_current_index = 0;
-		double tone_hz = 880;
-		double wpm = 24;
+		double tone_hz = 932.330;
+		double wpm = 33;
 		double sps = 44100;
 		double Eps;
 		double Bit;
@@ -97,7 +97,6 @@ namespace Morseform
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid));
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -135,8 +134,8 @@ namespace Morseform
 			this->menuStrip1->BackColor = System::Drawing::SystemColors::Desktop;
 			this->menuStrip1->ForeColor = System::Drawing::SystemColors::HighlightText;
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-			this->fileToolStripMenuItem,
-			this->helpToolStripMenuItem, this->aboutToolStripMenuItem
+				this->fileToolStripMenuItem,
+					this->helpToolStripMenuItem, this->aboutToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -149,8 +148,8 @@ namespace Morseform
 			this->fileToolStripMenuItem->BackColor = System::Drawing::SystemColors::Desktop;
 			this->fileToolStripMenuItem->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-			this->openFileToolStripMenuItem,
-			this->saveAsToolStripMenuItem, this->exitToolStripMenuItem
+				this->openFileToolStripMenuItem,
+					this->saveAsToolStripMenuItem, this->exitToolStripMenuItem
 			});
 			this->fileToolStripMenuItem->ForeColor = System::Drawing::SystemColors::HighlightText;
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
@@ -439,7 +438,7 @@ namespace Morseform
 			this->MaximumSize = System::Drawing::Size(624, 433);
 			this->MinimumSize = System::Drawing::Size(624, 433);
 			this->Name = L"Form1";
-			this->Text = L"Morse Code 1.18";
+			this->Text = L"Morse Code 1.19";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
@@ -448,6 +447,7 @@ namespace Morseform
 			this->text_modus_groupbox->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	private: System::Void modus_listBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
@@ -588,9 +588,13 @@ namespace Morseform
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
 			this->audio_out_textBox->Text = String::Empty;
 			this->audio_out_textBox->Text = fname + "\r\n";
-			this->audio_out_textBox->Text += "wave: " + sps.ToString("0.00") + " Hz(-sps: " + (int)sps + ")\r\n";
-			this->audio_out_textBox->Text += "tone: " + tone_hz.ToString("0.00") + " Hz(-tone: " + (int)tone_hz + ")\r\n";
-			this->audio_out_textBox->Text += "code: " + Eps.ToString("0.00") + " Hz(-wpm: " + (int)wpm + ")\r\n";
+			String^ w = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
+			String^ t = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+			String^ c = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
+			String^ e = msclr::interop::marshal_as<System::String^>(to_string((double)Eps));
+			this->audio_out_textBox->Text += "wave: " + w + " Hz(-sps: " + w + ")\r\n";
+			this->audio_out_textBox->Text += "tone: " + t + " Hz(-tone: " + t + ")\r\n";
+			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
 		}
 		if (modus_current_index == 8) // mono
 		{
@@ -613,9 +617,13 @@ namespace Morseform
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
 			this->audio_out_textBox->Text = String::Empty;
 			this->audio_out_textBox->Text = fname + "\r\n";
-			this->audio_out_textBox->Text += "wave: " + sps.ToString("0.00") + " Hz(-sps: " + (int)sps + ")\r\n";
-			this->audio_out_textBox->Text += "tone: " + tone_hz.ToString("0.00") + " Hz(-tone: " + (int)tone_hz + ")\r\n";
-			this->audio_out_textBox->Text += "code: " + Eps.ToString("0.00") + " Hz(-wpm: " + (int)wpm + ")\r\n";
+			String^ w = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
+			String^ t = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+			String^ c = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
+			String^ e = msclr::interop::marshal_as<System::String^>(to_string((double)Eps));
+			this->audio_out_textBox->Text += "wave: " + w + " Hz(-sps: " + w + ")\r\n";
+			this->audio_out_textBox->Text += "tone: " + t + " Hz(-tone: " + t + ")\r\n";
+			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
 		}
 	}
 	private: System::Void check_sound_settings()
@@ -628,10 +636,10 @@ namespace Morseform
 			if (d >= 20.0 && d <= 8000.0)
 			{
 				this->tone_hz = d;
-				this->tone_textbox->Text = tone_hz.ToString("0.000");
+				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
 			}
 			else
-				this->tone_textbox->Text = tone_hz.ToString("0.000");
+				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
 		}
 		if (!regex_match(msclr::interop::marshal_as<std::string>(this->WPM_textbox->Text), r))
 		{
@@ -753,7 +761,7 @@ namespace Morseform
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) 
 	{
 		this->modus_listBox->SelectedIndex = 1;
-		this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)tone_hz));
+		this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
 		this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 		this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 	}
