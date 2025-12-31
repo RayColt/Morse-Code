@@ -632,8 +632,8 @@ namespace Morseform
 	}
 	private: System::Void check_sound_settings()
 	{
-		regex r("[0-9]");
-		if (!regex_match(msclr::interop::marshal_as<std::string>(this->tone_textbox->Text), r))
+		regex r("^[0-9]+(\\.[0-9]+)?$");
+		if (regex_match(msclr::interop::marshal_as<std::string>(this->tone_textbox->Text), r))
 		{
 			string str_unamanged = msclr::interop::marshal_as<std::string>(this->tone_textbox->Text);
 			double d = stod(str_unamanged);
@@ -641,11 +641,13 @@ namespace Morseform
 			{
 				this->tone_hz = d;
 				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
-			}
-			else
-				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+			}	
 		}
-		if (!regex_match(msclr::interop::marshal_as<std::string>(this->WPM_textbox->Text), r))
+		else
+		{
+			this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+		}
+		if (regex_match(msclr::interop::marshal_as<std::string>(this->WPM_textbox->Text), r))
 		{
 			string str_unamanged = msclr::interop::marshal_as<std::string>(this->WPM_textbox->Text);
 			double d = stod(str_unamanged);
@@ -654,10 +656,12 @@ namespace Morseform
 				this->wpm = d;
 				this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 			}
-			else
-				this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 		}
-		if (!regex_match(msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text), r))
+		else
+		{
+			this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
+		}
+		if (regex_match(msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text), r))
 		{
 			string str_unamanged = msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text);
 			int d = stoi(str_unamanged);
@@ -666,8 +670,10 @@ namespace Morseform
 				this->sps = d;
 				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 			}
-			else
-				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
+		}
+		else
+		{
+			this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 		}
 	}
 	private: System::Void help_menu_Click(System::Object^ sender, System::EventArgs^ e)
