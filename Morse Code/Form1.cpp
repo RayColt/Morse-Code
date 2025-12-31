@@ -73,8 +73,8 @@ namespace Morseform
 		System::Windows::Forms::ProgressBar^ audio_progressbar;
 		int modus_current_index = 0;
 		double tone_hz = 932.330;
-		double wpm = 33;
-		double sps = 44100;
+		int wpm = 33;
+		int sps = 44100;
 		double Eps;
 		double Bit;
 		Morse* m = new Morse();
@@ -582,7 +582,7 @@ namespace Morseform
 			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			MorseWav mw = MorseWav(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);
+			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);// a construct directly
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
@@ -611,7 +611,7 @@ namespace Morseform
 			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			MorseWav mw = MorseWav(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);
+			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);// a construct directly
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
@@ -656,14 +656,14 @@ namespace Morseform
 		if (!regex_match(msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text), r))
 		{
 			string str_unamanged = msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text);
-			double d = stod(str_unamanged);
+			int d = stoi(str_unamanged);
 			if (d >= 8000.0 && d <= 48000.0)
 			{
 				this->sps = d;
-				this->SPS_textbox->Text = sps.ToString("0.000");
+				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 			}
 			else
-				this->SPS_textbox->Text = sps.ToString("0.000");
+				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 		}
 	}
 	private: System::Void help_menu_Click(System::Object^ sender, System::EventArgs^ e)
