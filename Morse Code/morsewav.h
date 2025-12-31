@@ -60,6 +60,10 @@ public:
 	* Constructor
 	*/
 	MorseWav(const char* morsecode, std::string filename, double tone, double wpm, double samples_per_second, bool play, int modus);
+	
+	/**
+	* Destructor
+	*/
 	~MorseWav()
 	{
 		delete[] buffer_pcm;
