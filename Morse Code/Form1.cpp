@@ -619,20 +619,20 @@ namespace Morseform
 			if (d >= 20.0 && d <= 8000.0)
 			{
 				this->tone_hz = d;
-				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 			}	
 		}
 		else
 		{
-			this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+			this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 		}
 		if (regex_match(msclr::interop::marshal_as<std::string>(this->WPM_textbox->Text), r))
 		{
 			string str_unamanged = msclr::interop::marshal_as<std::string>(this->WPM_textbox->Text);
-			double d = stod(str_unamanged);
-			if (d >= 0.0 && d <= 50.0)
+			int i = stoi(str_unamanged);
+			if (i >= 0 && i <= 50)
 			{
-				this->wpm = d;
+				this->wpm = i;
 				this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 			}
 		}
@@ -643,11 +643,11 @@ namespace Morseform
 		if (regex_match(msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text), r))
 		{
 			string str_unamanged = msclr::interop::marshal_as<std::string>(this->SPS_textbox->Text);
-			int d = stoi(str_unamanged);
-			if (d >= 8000.0 && d <= 48000.0)
+			int i = stoi(str_unamanged);
+			if (i >= 8000 && i <= 48000)
 			{
-				this->sps = d;
-				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
+				this->sps = i;
+				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string(sps));
 			}
 		}
 		else
@@ -750,9 +750,20 @@ namespace Morseform
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) 
 	{
 		this->modus_listBox->SelectedIndex = 1;
-		this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+		this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 		this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 		this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 	}
+	string trimDecimals(const std::string& s, int decimals)
+	{
+		int pos = s.find('.');
+		if (pos == std::string::npos) return s; // no decimal point
+
+		int end = pos + 1 + decimals;
+		if (end >= s.size()) return s; // already short enough
+
+		return s.substr(0, end);
+	}
 	};
+
 }
