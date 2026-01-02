@@ -159,6 +159,10 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cpp</DependentUpon>
       <SubType>Designer</SubType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cpp</DependentUpon>

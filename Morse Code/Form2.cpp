@@ -35,7 +35,7 @@ namespace Morseform
 		void InitializeComponent(void)
 		{
 			this->help_textBox = (gcnew System::Windows::Forms::TextBox());
-			this->SuspendLayout(); 
+			this->SuspendLayout();
 			this->help_textBox->BackColor = System::Drawing::SystemColors::Desktop;
 			this->help_textBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->help_textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
