@@ -621,6 +621,16 @@ namespace Morseform
 				this->tone_hz = d;
 				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 			}	
+			if (d > 8000.0)
+			{
+				this->tone_hz = 8000.0;
+				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
+			}
+			if (d < 20.0)
+			{
+				this->tone_hz = 20.0;
+				this->tone_textbox->Text = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
+			}
 		}
 		else
 		{
@@ -633,6 +643,11 @@ namespace Morseform
 			if (i >= 0 && i <= 50)
 			{
 				this->wpm = i;
+				this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
+			}
+			if (i > 50)
+			{
+				this->wpm = 50;
 				this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 			}
 		}
@@ -648,6 +663,16 @@ namespace Morseform
 			{
 				this->sps = i;
 				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string(sps));
+			}
+			if (i > 48000)
+			{
+				this->sps = 48000;
+				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
+			}
+			if (i < 8000)
+			{
+				this->sps = 8000;
+				this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 			}
 		}
 		else
