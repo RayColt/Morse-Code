@@ -50,6 +50,7 @@ private:
 	long pcm_count; // total number of samples
 	long wav_size;
 
+	// memory allocation functions
 	PCM16_stereo_t* allocate_PCM16_stereo_buffer(int32_t size);
 	PCM16_stereo_t* reallocate_PCM16_stereo_buffer(PCM16_stereo_t* buffer, int32_t size);
 	PCM16_mono_t* allocate_PCM16_mono_buffer(int32_t size);
