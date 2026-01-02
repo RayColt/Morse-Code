@@ -754,7 +754,7 @@ namespace Morseform
 		this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 		this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 	}
-	string trimDecimals(const std::string& s, int decimals)
+	private: string trimDecimals(const std::string& s, int decimals)
 	{
 		int pos = s.find('.');
 		if (pos == std::string::npos) return s; // no decimal point
