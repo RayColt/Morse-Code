@@ -763,5 +763,4 @@ namespace Morseform
 		return s.substr(0, end);
 	}
 	};
-
 }
