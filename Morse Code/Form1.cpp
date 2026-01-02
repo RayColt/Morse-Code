@@ -600,7 +600,7 @@ namespace Morseform
 			this->audio_out_textBox->Text = String::Empty;
 			this->audio_out_textBox->Text = fname + "\r\n";
 			String^ w = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
-			String^ t = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
+			String^ t = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 			String^ c = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 			String^ e = msclr::interop::marshal_as<System::String^>(to_string((double)Eps));
 			this->audio_out_textBox->Text += "wave: " + w + " Hz(-sps: " + w + ")\r\n";
