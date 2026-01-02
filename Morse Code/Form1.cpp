@@ -567,7 +567,7 @@ namespace Morseform
 	{
 		string morse = "";
 		String^ str = "";
-		if (modus_current_index == 7) // stereo
+		if (modus_current_index == 7 || modus_current_index == 8) 
 		{
 			// create from new lines two spaces, as between words
 			for (int i = 0; i < this->main_textbox->Lines->Length; i++)
@@ -582,40 +582,18 @@ namespace Morseform
 			string filename = "wav-files-morse\\morse";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			// a direct construction of the MorseWav object
-			// avoids the temporary and avoids shallow copying
-			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);
-			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
-			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
-			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
-			this->audio_out_textBox->Text = String::Empty;
-			this->audio_out_textBox->Text = fname + "\r\n";
-			String^ w = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
-			String^ t = msclr::interop::marshal_as<System::String^>(to_string((double)tone_hz));
-			String^ c = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
-			String^ e = msclr::interop::marshal_as<System::String^>(to_string((double)Eps));
-			this->audio_out_textBox->Text += "wave: " + w + " Hz(-sps: " + w + ")\r\n";
-			this->audio_out_textBox->Text += "tone: " + t + " Hz(-tone: " + t + ")\r\n";
-			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
-		}
-		if (modus_current_index == 8) // mono
-		{
-			// create from new lines two spaces, as between words
-			for (int i = 0; i < this->main_textbox->Lines->Length; i++)
+			if (modus_current_index == 7) // stereo
 			{
-				str += this->main_textbox->Lines[i] + "  ";
+				// a direct construction of the MorseWav object
+				// avoids the temporary and avoids shallow copying
+				MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);
 			}
-			string str_unmanaged = msclr::interop::marshal_as<std::string>(str); // String^ to string
-			morse = m->morse_encode(str_unmanaged);
-			morse.resize(this->main_textbox->MaxLength);
-			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
-			check_sound_settings();
-			string filename = "wav-files-morse\\morse";
-			filename += to_string(time(NULL));
-			filename += ".wav";
-			// a direct construction of the MorseWav object
-			// avoids the temporary and avoids shallow copying
-			MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);
+			else if (modus_current_index == 8) // mono
+			{
+				// a direct construction of the MorseWav object
+				// avoids the temporary and avoids shallow copying
+				MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);
+			}
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
@@ -630,6 +608,7 @@ namespace Morseform
 			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
 		}
 	}
+
 	private: System::Void check_sound_settings()
 	{
 		regex r("^[0-9]+(\\.[0-9]+)?$");
