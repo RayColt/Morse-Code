@@ -757,10 +757,9 @@ namespace Morseform
 	private: string trimDecimals(const std::string& s, int decimals)
 	{
 		int pos = s.find('.');
-		if (pos == std::string::npos) return s; // no decimal point
-
+		if (pos == std::string::npos) return s;
 		int end = pos + 1 + decimals;
-		if (end >= s.size()) return s; // already short enough
+		if (end >= s.size()) return s;
 
 		return s.substr(0, end);
 	}
