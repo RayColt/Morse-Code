@@ -760,7 +760,6 @@ namespace Morseform
 		if (pos == std::string::npos) return s;
 		int end = pos + 1 + decimals;
 		if (end >= s.size()) return s;
-
 		return s.substr(0, end);
 	}
 	};
