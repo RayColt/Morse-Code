@@ -243,7 +243,7 @@ namespace Morseform
 			this->tone_textbox->BackColor = System::Drawing::SystemColors::Desktop;
 			this->tone_textbox->ForeColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->tone_textbox->Location = System::Drawing::Point(135, 44);
-			this->tone_textbox->MaxLength = 8;
+			this->tone_textbox->MaxLength = 9;
 			this->tone_textbox->Name = L"tone_textbox";
 			this->tone_textbox->Size = System::Drawing::Size(66, 20);
 			this->tone_textbox->TabIndex = 10;
