@@ -30,13 +30,10 @@
     <ClCompile Include="Help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MorseWav.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Morse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dir.cpp">
+    <ClCompile Include="MorseWav.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,13 +44,10 @@
     <ClInclude Include="morse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="morsewav.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="morsewav.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

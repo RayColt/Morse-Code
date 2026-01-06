@@ -1,67 +1,49 @@
-#include "morsewav.h"
-#include "dir.h"
+﻿#include "morsewav.h"
 #include <shellapi.h>
 #pragma comment(lib, "Shell32.lib")
-/**
-* C++ MorseWav Class file used by morse.cpp
-* Convert morse code to STEREO Audio WAV file using PCM
-*
-* @author Ray Colt <ray_colt@pentagon.mil>
-* @copyright Copyright (c) 1978, 2026 Ray Colt
-* @license MIT License
-**/
+
 using namespace std;
-
-/**
-* Allocate or reallocate PCM buffers
-*/
-PCM16_stereo_t* MorseWav::allocate_PCM16_stereo_buffer(int32_t size)
-{
-    return (PCM16_stereo_t*)malloc(sizeof(PCM16_stereo_t) * size);
-}
-
-PCM16_stereo_t* MorseWav::reallocate_PCM16_stereo_buffer(PCM16_stereo_t* buffer, int32_t size)
-{
-    return (PCM16_stereo_t*)realloc(buffer, sizeof(PCM16_stereo_t) * size);
-}
-
-PCM16_mono_t* MorseWav::allocate_PCM16_mono_buffer(int32_t size)
-{
-    return (PCM16_mono_t*)malloc(sizeof(PCM16_mono_t) * size);
-}
-
-PCM16_mono_t* MorseWav::reallocate_PCM16_mono_buffer(PCM16_mono_t* buffer, int32_t size)
-{
-    return (PCM16_mono_t*)realloc(buffer, sizeof(PCM16_mono_t) * size);
-}
 
 /**
 * Constructor
 */
-MorseWav::MorseWav(const char* morsecode, string filename, double tone, double wpm, double samples_per_second, bool play, int modus)
+MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus) :
+    MorseCode(morsecode),
+    NumChannels(modus),
+    Wpm(wpm),
+    Tone(tone),
+    Sps(samples_per_second),
+    PcmCount(0),
+    WaveSize(0)
 {
-    Path = filename.c_str();
-    MorseCode = morsecode;
-    MONO_STEREO = modus;
-    Wpm = wpm;
-    Tone = tone;
-    Sps = samples_per_second;
+    string fp = SaveDir + filename;
+
     // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
     Bit = 1.2 / Wpm;    // seconds per element (period of morse coding)
+
     printf("wave: %9.3lf Hz (-sps:%lg)\n", Sps, Sps);
     printf("tone: %9.3lf Hz (-tone:%lg)\n", Tone, Tone);
     printf("code: %9.3lf Hz (-wpm:%lg)\n", Eps, Wpm);
-    //show_details();
-    check_ratios();
-    morse_tone(MorseCode);
-    wav_write(Path, buffer_mono_pcm, buffer_pcm, pcm_count);
-    printf("%ld PCM samples", pcm_count);
-    printf(" (%.1lf s @ %.1lf kHz)", (double)pcm_count / Sps, Sps / 1e3);
-    printf(" written to %s (%.1f kB)\n", Path, wav_size / 1024.0);
-    if (play)
+
+    MorseWav::MorseTones(MorseCode);
+    MorseWav::WriteWav(filename, pcm);
+
+    printf("%ld PCM samples", PcmCount);
+    printf(" (%.1lf s @ %.1lf kHz)", (double)PcmCount / Sps, Sps / 1e3);
+    printf(" written to %s (%.1f kB)\n", fp.c_str(), WaveSize / 1024.0);
+
+    if (1)
     {
-        ShellExecuteA(NULL, "open", Path, NULL, NULL, SW_SHOWNORMAL);
+        /* IF SHELLAPI DOES NOT WORK, USE SYSTEM COMMAND
+         * BUT THIS OPENS A NEW CONSOLE WINDOW WHICH IS ANNOYING
+        string str = Path;
+        str += " /play /close ";
+        str += Path;
+        const char* c = str.c_str();
+        printf("** %s\n", c);
+        system(c);*/
+        ShellExecuteA(NULL, "open", fp.c_str(), NULL, NULL, SW_SHOWNORMAL);
     }
 }
 
@@ -70,61 +52,42 @@ MorseWav::MorseWav(const char* morsecode, string filename, double tone, double w
 * Generate one quantum of silence or tone in PCM/WAV array.
 * sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate
 *
-* @param on_off
+* @param silence
 */
-void MorseWav::tone(int on_off)
+void MorseWav::Tones(int silence)
 {
-    double ampl = 32000.0; // amplitude 32KHz for digital sound (max height of wave)
-    double pi = M_PI;
-    double w = 2.0 * pi * Tone;
-    long i, n, size;
-    static long seconds;
-    if (MONO_STEREO == 1) // mono
+    double seconds = Bit;   // keep seconds explicit
+    size_t numsamples = static_cast<size_t>(std::round(seconds * Sps)); // number of samples to generate
+    const double twoPiF = 2 * M_PI * Tone;
+    const double twoPi = 2.0 * M_PI;
+    constexpr int maxInt16 = std::numeric_limits<int16_t>::max(); // maximum for signed 16‑bit PCM
+
+    pcm.reserve(pcm.size() + numsamples);
+    if (NumChannels == 2)
     {
-        if (buffer_mono_pcm == NULL)
+        for (size_t i = 0; i < numsamples; ++i)
         {
-            seconds = 1;
-            size = (long)(seconds * sizeof buffer_mono_pcm * Sps);
-            buffer_mono_pcm = allocate_PCM16_mono_buffer(size);
+            double t = static_cast<double>(i) / Sps; // time in seconds
+            double sampleL = std::sin(silence * twoPiF * t) * Amplitude;
+            double sampleR = std::sin(silence * twoPiF * t) * Amplitude;
+
+            int16_t intSampleL = static_cast<int16_t>(clamp(sampleL, -1.0, 1.0) * maxInt16);
+            int16_t intSampleR = static_cast<int16_t>(clamp(sampleR, -1.0, 1.0) * maxInt16);
+
+            pcm.push_back(intSampleL);
+            pcm.push_back(intSampleR);
+            PcmCount++;
         }
     }
-    else // stereo
+    else
     {
-        if (buffer_pcm == NULL)
+        for (size_t i = 0; i < numsamples; ++i)
         {
-            seconds = 1;
-            size = (long)(seconds * sizeof buffer_pcm * Sps);
-            buffer_pcm = allocate_PCM16_stereo_buffer(size);
-        }
-    }
-    n = (long)(Bit * Sps);
-    for (i = 0; i < n; i++)
-    {
-        double t = (double)i / Sps;
-        if (MONO_STEREO == 1) // MONO
-        {
-            double t = (double)i / Sps;
-            if (pcm_count == Sps * seconds)
-            {
-                seconds++;
-                size = (long)(seconds * sizeof buffer_mono_pcm * Sps);
-                buffer_mono_pcm = reallocate_PCM16_mono_buffer(buffer_mono_pcm, size);
-            }
-            // generate one point on the sine wave
-            buffer_mono_pcm[pcm_count++].speaker = (int16_t)(on_off * ampl * sin(w * t));
-        }
-        else // STEREO
-        {
-            if (pcm_count == Sps * seconds)
-            {
-                seconds++;
-                size = (long)(seconds * sizeof buffer_pcm * Sps);
-                buffer_pcm = reallocate_PCM16_stereo_buffer(buffer_pcm, size);
-            }
-            pcm_count++;
-            // generate one point on the sine wave for left and right
-            buffer_pcm[pcm_count].left = (int16_t)(on_off * ampl * sin(w * t));
-            buffer_pcm[pcm_count].right = (int16_t)(on_off * ampl * sin(w * t));
+            double t = static_cast<double>(i) / Sps;
+            double sampleL = std::sin(silence * twoPiF * t) * Amplitude;
+            int16_t intSampleL = static_cast<int16_t>(clamp(sampleL, -1.0, 1.0) * maxInt16);
+            pcm.push_back(intSampleL);
+            PcmCount++;
         }
     }
 }
@@ -138,99 +101,27 @@ void MorseWav::tone(int on_off)
 * plus two units of silence (if end of letter, one space),
 * plus four units of silence (if also end of word).
 */
-void MorseWav::dit() { tone(1); tone(0); }
-void MorseWav::dah() { tone(1); tone(1); tone(1); tone(0); }
-void MorseWav::space() { tone(0); tone(0); }
+void MorseWav::Dit() { Tones(1); Tones(0); }
+void MorseWav::Dah() { Tones(1); Tones(1); Tones(1); Tones(0); }
+void MorseWav::Space() { Tones(0); Tones(0); }
 
 /**
-* Create Tones from morse code.
+* Morse code tone generator
 *
 * @param code
 */
-void MorseWav::morse_tone(const char* code)
+void MorseWav::MorseTones(const char* code)
 {
     char c;
     while ((c = *code++) != '\0')
     {
         //printf("%c", c);
-        if (c == '.') dit();
-        if (c == '-') dah();
-        if (c == ' ') space();
+        if (c == '.') Dit();
+        if (c == '-') Dah();
+        if (c == ' ') Space();
     }
 }
 
-/**
-* Calculate poor ratio.
-*
-* @param a
-* @param b
-* @return int
-*/
-int MorseWav::ratio_poor(double a, double b)
-{
-    double ab = a / b;
-    long ratio = (long)(ab + 1e-6);
-    return fabs(ab - ratio) > 1e-4;
-}
-
-/**
-* Check for sub-optimal combination of rates (poor sounding sinewaves).
-*/
-void MorseWav::check_ratios()
-{
-    char nb[] = "WARNING: sub-optimal sound ratio";
-    if (ratio_poor(Sps, Tone))
-    {
-        printf("%s Sps(%lg) / Tone(%lg) = %.6lf\n", nb, Sps, Tone, Sps / Tone);
-    }
-    if (ratio_poor(Sps, Eps))
-    {
-        printf("%s Sps(%lg) / Eps(%lg) = %.6lf\n", nb, Sps, Eps, Sps / Eps);
-    }
-    if (ratio_poor(Tone, Eps))
-    {
-        printf("%s Tone(%lg) / Eps(%lg) = %.6lf\n", nb, Tone, Eps, Tone / Eps);
-    }
-}
-
-/**
-* Display detailed data
-*/
-void MorseWav::show_details()
-{
-    double wps, ms;
-    wps = Wpm / 60.0;   // words per second
-    Eps = EPW * wps;    // elements per second
-    ms = 1000.0 / Eps;  // milliseconds per element
-    printf("\n");
-    printf("%12.6lf Wpm (words per minute)\n", Wpm);
-    printf("%12.6lf wps (words per second)\n", wps);
-    printf("%12.6lf EPW (elements per word)\n", (double)EPW);
-    printf("%12.6lf Eps (elements per second)\n", Eps);
-    printf("\n");
-    printf("%12.3lf ms dit\n", ms);
-    printf("%12.3lf ms dah\n", ms * 3);
-    printf("%12.3lf ms gap (element)\n", ms);
-    printf("%12.3lf ms gap (character)\n", ms * 3);
-    printf("%12.3lf ms gap (word)\n", ms * 7);
-    printf("\n");
-    printf("%12.3lf Hz pcm frequency\n", Sps);
-    printf("%12.3lf Hz tone frequency\n", Tone);
-    printf("%12.3lf    pcm/tone ratio\n", Sps / Tone);
-    printf("\n");
-    printf("%12.3lf Hz pcm frequency\n", Sps);
-    printf("%12.3lf Hz element frequency\n", Eps);
-    printf("%12.3lf    pcm/element ratio\n", Sps / Eps);
-    printf("\n");
-    printf("%12.3lf Hz tone frequency\n", Tone);
-    printf("%12.3lf Hz element frequency\n", Eps);
-    printf("%12.3lf    tone/element ratio\n", Tone / Eps);
-    printf("\n");
-}
-
-/**
-* Create WAV file from PCM array.
-*/
 typedef unsigned short WORD;
 typedef unsigned long DWORD;
 typedef struct _wave
@@ -245,80 +136,72 @@ typedef struct _wave
 } WAVE;
 
 /**
-* Macro for writing data to file and updating wav_size
-*/
-#define FWRITE(buffer, size) \
-    wav_size += size; \
-    if (fwrite(buffer, size, 1, file) != 1) { \
-        fprintf(stderr, "Write failed: %s\n", path); \
-        exit(1); \
-    }
-
-/**
 * Write wav file
 *
-* @param path
-* @param data
-* @param count
+* @param filename
+* @param pcmData
 */
-void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_stereo_t* buffer_pcm, long count)
+void MorseWav::WriteWav(const char* filename, const std::vector<int16_t>& pcmdata)
 {
     long data_size, wave_size, riff_size;
     int fmt_size = 16;
-    FILE* file;
-    WAVE wave;
+    FILE* file = NULL;
+
+    WAVE wave = { 0 };
     wave.wFormatTag = 0x1;
-    wave.nChannels = MONO_STEREO; // 1 or 2 ~ mono or stereo
+    wave.nChannels = NumChannels; // 1 or 2 ~ mono or stereo
     wave.wBitsPerSample = 16; // 8 or 16
     wave.nBlockAlign = (wave.wBitsPerSample * wave.nChannels) / 8;
     wave.nSamplesPerSec = (DWORD)Sps;
     wave.nAvgBytesPerSec = wave.nSamplesPerSec * wave.nBlockAlign;
     wave.cbSize = 0;
+
     wave_size = sizeof wave;
-    data_size = (count * wave.wBitsPerSample * wave.nChannels) / 8;
+    data_size = (PcmCount * wave.wBitsPerSample * wave.nChannels) / 8;
     riff_size = fmt_size + wave_size + data_size; // 36 + data_size
+    WaveSize = riff_size + 8;
 
-    string dirPath = Dir::GetParentPath(path);
-    if (!Dir::Exists(dirPath)) 
+    // Try to create the directory
+    if (_mkdir(SaveDir.c_str()) == 0)
     {
-        try
-        {
-            Dir::CreateDirectories(dirPath);
-        }
-        catch (const exception& e)
-        {
-            cerr << "Directory creation failed: " << e.what() << '\n';
-            exit(1);
-        }
-    }
-
-#pragma warning(suppress : 4996)
-    file = fopen(path, "wb");
-    if (file == NULL) 
-    {
-        cerr << "Open file failed: " << path << '\n';
-        exit(1);
-    }
-
-    FWRITE("RIFF", 4);
-    FWRITE(&riff_size, 4);
-    FWRITE("WAVE", 4);
-    FWRITE("fmt ", 4);
-    FWRITE(&wave_size, 4);
-    FWRITE(&wave, wave_size);
-    FWRITE("data", 4);
-    FWRITE(&data_size, 4);
-    if (MONO_STEREO == 1)
-    {
-        FWRITE(buffer_mono_pcm, data_size);
+        cerr << "Directory created successfully.\n";
     }
     else
     {
-        FWRITE(buffer_pcm, data_size);
+        if (errno == EEXIST)
+        {
+            cerr << "Directory already exists.\n";
+        }
+        else
+        {
+            cerr << "Error creating directory\n";
+            exit(1);
+        }
     }
-    fflush(file);
-    // int fd = _fileno(file);
-    // struct _stat st;
-    // int ok = _fstat(fd, &st);
-    fclose(file);
+    // Open file for binary writing
+    ofstream out((SaveDir + filename), std::ios::binary);
+    if (!out.is_open())
+    {
+        cerr << "Failed to open file: " << SaveDir + filename << '\n';
+        // optionally inspect errno: std::perror("open");
+        exit(1);
+    }
+
+    // RIFF header
+    out.write("RIFF", 4);
+    out.write(reinterpret_cast<const char*>(&riff_size), 4);
+    out.write("WAVE", 4);
+
+    // fmt subchunk
+    out.write("fmt ", 4);
+    out.write(reinterpret_cast<const char*>(&wave_size), 4);
+    out.write(reinterpret_cast<const char*>(&wave), wave_size);
+
+    // data subchunk
+    out.write("data", 4);
+    out.write(reinterpret_cast<const char*>(&data_size), 4);
+    out.write(reinterpret_cast<const char*>(pcmdata.data()), data_size);
+
+    out.flush();
+    out.close();
 }

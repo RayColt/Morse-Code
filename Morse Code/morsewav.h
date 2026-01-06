@@ -5,6 +5,7 @@
 #endif
 
 #define _USE_MATH_DEFINES // Required for MSVC/Windows
+
 #include <cmath>
 #include <math.h>
 #include <stdio.h>
@@ -12,70 +13,59 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
-/**
-* C++ MorseWav.h file
-*/	
-
-typedef struct PCM16_stereo_s
-{
-	int16_t left;
-	int16_t right;
-} PCM16_stereo_t;
-
-typedef struct PCM16_mono_s
-{
-	int16_t speaker;
-} PCM16_mono_t;
+#include <vector>
+#include <cstdint>
+#include <cstddef>
+#include <algorithm>
+#include <stdexcept>
+#include <direct.h>
+#include <errno.h>
+#define NOMINMAX
+#include <windows.h>
 
 class MorseWav
 {
 private:
-	/**
-	* member variables
-	*/
-#define EPW 50      // elements per word (definition)
-	const char* MorseCode; // string array with morse
-	int Debug;      // debug mode
-	int Play;       // play WAV file
-	int MONO_STEREO = 1;   // stereo or mono modus
-	const char* Path = "morse.wav";    // output filename
-	double Tone;    // tone frequency (Hz)
-	double Wpm;     // words per minute
-	double Eps;     // elements per second (frequency of basic morse element)
-	double Bit;     // duration of basic morse element,cell,quantum (seconds)
-	double Sps;     // samples per second (WAV file, sound card)
-	PCM16_mono_t* buffer_mono_pcm = NULL; // array with data
-	PCM16_stereo_t* buffer_pcm = NULL;
-	long pcm_count; // total number of samples
-	long wav_size;
-
-	// memory allocation functions
-	PCM16_stereo_t* allocate_PCM16_stereo_buffer(int32_t size);
-	PCM16_stereo_t* reallocate_PCM16_stereo_buffer(PCM16_stereo_t* buffer, int32_t size);
-	PCM16_mono_t* allocate_PCM16_mono_buffer(int32_t size);
-	PCM16_mono_t* reallocate_PCM16_mono_buffer(PCM16_mono_t* buffer, int32_t size);
+	const std::string SaveDir = "wav-files-morse\\"; // output directory - use this format
+	const char* MorseCode;     // morse code string
+	int NumChannels;           // 1 = mono, 2 = stereo
+	double Wpm;                // words per minute
+	double Tone;               // tone frequency in hertz
+	double Sps;                // samples per second
+	double Eps;                // elements per second (frequency of morse coding)
+	double Bit;                // seconds per element (period of morse coding)
+	std::vector<int16_t> pcm;  // PCM data array
+	long PcmCount;             // number of PCM samples
+	long WaveSize;             // size of the wave file in bytes
+	double Amplitude = 0.8;    // 80% of max volume (0.0 to 1.0)
 
 public:
 	/**
-	* Constructor
+	* Constructor / Destructor
 	*/
-	MorseWav(const char* morsecode, std::string filename, double tone, double wpm, double samples_per_second, bool play, int modus);
-	
-	/**
-	* Destructor
-	*/
-	~MorseWav() = default; // everything is freed automatically
+	MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus);
+	~MorseWav() = default;
 
 private:
+	/**
+	* Write wav file
+	*
+	* @param filename
+	* @param pcmData
+	*/
+	void WriteWav(
+		const char* filename,
+		const std::vector<int16_t>& pcmData
+	);
+
 	/**
 	* Get binary morse code (dit/dah) for a given character.
 	* Generate one quantum of silence or tone in PCM/WAV array.
 	* sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate
 	*
-	* @param on_off
+	* @param silence
 	*/
-	void tone(int on_off);
+	void Tones(int silence);
 
 	/**
 	* Define dit, dah, end of letter, end of word.
@@ -86,42 +76,15 @@ private:
 	* plus two units of silence (if end of letter, one space),
 	* plus four units of silence (if also end of word).
 	*/
-	void dit();
-	void dah();
-	void space();
-	
+	void Dit();
+	void Dah();
+	void Space();
+
 	/**
-	* Create Tones from morse code.
+	* Morse code tone generator
 	*
 	* @param code
 	*/
-	void morse_tone(const char* code);
-
-	/**
-	* Calculate poor ratio.
-	*
-	* @param a
-	* @param b
-	* @return int
-	*/
-	int ratio_poor(double a, double b);
-
-	/**
-	* Check ratios between Sps, Tone and Eps
-	*/
-	void check_ratios();
-
-	/**
-	* Show details about morse/wav parameters
-	*/
-	void show_details();
-
-	/**
-	* Write wav file
-	*
-	* @param path
-	* @param data
-	* @param count
-	*/
-	void wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_stereo_t* buffer_pcm, long count);
+	void MorseTones(const char* code);
 };
+

@@ -72,8 +72,8 @@ namespace Morseform
 		System::Windows::Forms::Label^ progress_bar_label;
 		System::Windows::Forms::ProgressBar^ audio_progressbar;
 		int modus_current_index = 0;
-		double tone_hz = 932.330;
-		int wpm = 33;
+		double tone_hz = 880.0;
+		int wpm = 30;
 		int sps = 44100;
 		double Eps;
 		double Bit;
@@ -579,20 +579,20 @@ namespace Morseform
 			morse.resize(this->main_textbox->MaxLength);
 			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
 			check_sound_settings();
-			string filename = "wav-files-morse\\morse";
+			string filename = "morse_";
 			filename += to_string(time(NULL));
 			filename += ".wav";
-			if (modus_current_index == 7) // stereo
+			if (modus_current_index == 7) // STEREO
 			{
 				// a direct construction of the MorseWav object
 				// avoids the temporary and avoids shallow copying
-				MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 2);
+				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 2);
 			}
-			else if (modus_current_index == 8) // mono
+			else if (modus_current_index == 8) // MONO
 			{
 				// a direct construction of the MorseWav object
 				// avoids the temporary and avoids shallow copying
-				MorseWav mw(morse.c_str(), filename, tone_hz, wpm, sps, true, 1);
+				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 1);
 			}
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)

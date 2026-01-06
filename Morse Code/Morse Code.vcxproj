@@ -96,7 +96,7 @@
     </Link>
     <ClCompile>
       <ExceptionHandling>Async</ExceptionHandling>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,7 +133,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dir.cpp" />
     <ClCompile Include="Form2.cpp">
       <FileType>CppForm</FileType>
     </ClCompile>
@@ -174,7 +173,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dir.h" />
     <ClInclude Include="help.h" />
     <ClInclude Include="morse.h" />
     <ClInclude Include="morsewav.h" />
