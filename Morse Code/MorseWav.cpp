@@ -71,6 +71,7 @@ void MorseWav::Tones(int silence)
             double sampleL = std::sin(silence * twoPiF * t) * Amplitude;
             double sampleR = std::sin(silence * twoPiF * t) * Amplitude;
 
+			// Clamp samples between -1.0 and 1.0 to avoid overflow when converting to int16_t
             int16_t intSampleL = static_cast<int16_t>(clamp(sampleL, -1.0, 1.0) * maxInt16);
             int16_t intSampleR = static_cast<int16_t>(clamp(sampleR, -1.0, 1.0) * maxInt16);
 
@@ -85,7 +86,10 @@ void MorseWav::Tones(int silence)
         {
             double t = static_cast<double>(i) / Sps;
             double sampleL = std::sin(silence * twoPiF * t) * Amplitude;
+            
+            // Clamp samples between -1.0 and 1.0 to avoid overflow when converting to int16_t
             int16_t intSampleL = static_cast<int16_t>(clamp(sampleL, -1.0, 1.0) * maxInt16);
+            
             pcm.push_back(intSampleL);
             PcmCount++;
         }
