@@ -70,7 +70,7 @@ namespace Morseform
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(184, 20);
 			this->label1->TabIndex = 3;
-			this->label1->Text = L"COLT\'S MORSE 2026";
+			this->label1->Text = L"COLT\'S MORSE 2022";
 			this->label1->Click += gcnew System::EventHandler(this, &Form3::label1_Click);
 			// 
 			// textBox2
