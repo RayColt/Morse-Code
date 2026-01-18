@@ -7,16 +7,14 @@ using namespace std;
 /**
 * Constructor
 */
-MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus) :
-    MorseCode(morsecode),
-    NumChannels(modus),
-    Wpm(wpm),
-    Tone(tone),
-    Sps(samples_per_second),
-    PcmCount(0),
-    WaveSize(0)
+MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus)
 {
     string fp = SaveDir + filename;
+	MorseCode = morsecode;
+	NumChannels = modus;
+	Wpm = wpm;
+	Tone = tone;
+	Sps = samples_per_second;
 
     // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
