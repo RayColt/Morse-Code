@@ -610,15 +610,15 @@ namespace Morseform
 			String^ w = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 			String^ t = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 			String^ c = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
-			String^ e = msclr::interop::marshal_as<System::String^>(to_string((double)Eps));
-			this->audio_out_textBox->Text += "wave: " + w + " Hz(-sps: " + w + ")\r\n";
-			this->audio_out_textBox->Text += "tone: " + t + " Hz(-tone: " + t + ")\r\n";
-			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
+			String^ e = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string((double)Eps), 2));
+			this->audio_out_textBox->Text += "wave: " + w + " Hz (-sps: " + w + ")\r\n";
+			this->audio_out_textBox->Text += "tone: " + t + " Hz (-tone: " + t + ")\r\n";
+			this->audio_out_textBox->Text += "code: " + e + " Hz (-wpm: " + c + ")\r\n";
 			double seconds = (double)pcmcount / (double)sps;
 			if (modus_current_index == 7) seconds = seconds / 2.0; // STEREO
 			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(to_string(pcmcount));
 			this->audio_out_textBox->Text += " PCM samples in ";
-			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(seconds), 2)) + " s";
+			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(seconds), 3)) + " s";
 		}
 	}
 
@@ -801,12 +801,12 @@ namespace Morseform
 		if (end >= s.size()) return s;
 		return s.substr(0, end);
 	}
-	// generate random integer between 100 and 9999
+	// generate random integer between 100 and 99999
 	int randinteger() 
 	{
 		static std::random_device rd;
 		static std::mt19937 gen(rd());
-		static std::uniform_int_distribution<int> dist(100, 9999);
+		static std::uniform_int_distribution<int> dist(100, 99999);
 		return dist(gen);
 	}
 
