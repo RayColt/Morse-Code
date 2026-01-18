@@ -520,7 +520,7 @@ namespace Morseform
 	{
 		string morse = "";
 		String^ str = "";
-		if (modus_current_index == 1 || modus_current_index == 2)
+		if (modus_current_index == 1 || modus_current_index == 2 || modus_current_index == 7 || modus_current_index == 8)
 		{
 			// create from new lines two spaces, as between words
 			for (int i = 0; i < this->main_textbox->Lines->Length; i++)
