@@ -1,4 +1,5 @@
 #include <string>
+#include <random>
 #include <iostream>
 #include <windows.h>
 #include <msclr\marshal_cppstd.h>
@@ -580,10 +581,10 @@ namespace Morseform
 			morse.resize(this->main_textbox->MaxLength);
 			this->main_textbox->Text = msclr::interop::marshal_as<System::String^>(morse); // string to String^
 			check_sound_settings();
-			string filename = "morse_";
-			filename += to_string(time(NULL));
+			string filename = "morse";
+			filename += to_string(randinteger());
 			filename += ".wav";
-			long pcmcount;
+			long pcmcount, wavsize;
 
 			if (modus_current_index == 7) // STEREO
 			{
@@ -591,6 +592,7 @@ namespace Morseform
 				// avoids the temporary and avoids shallow copying
 				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 2);
 				pcmcount = mw.GetPcmCount() * 2;
+				wavsize = mw.GetWaveSize();
 			}
 			else if (modus_current_index == 8) // MONO
 			{
@@ -598,12 +600,13 @@ namespace Morseform
 				// avoids the temporary and avoids shallow copying
 				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 1);
 				pcmcount = mw.GetPcmCount();
+				wavsize = mw.GetWaveSize();
 			}
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
 			String^ fname = msclr::interop::marshal_as<System::String^>(filename);
 			this->audio_out_textBox->Text = String::Empty;
-			this->audio_out_textBox->Text = fname + "\r\n";
+			this->audio_out_textBox->Text = fname + " (" + msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(wavsize / 1024.0), 2)) + " kB)" + "\r\n";
 			String^ w = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 			String^ t = msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(tone_hz), 3));
 			String^ c = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
@@ -615,8 +618,7 @@ namespace Morseform
 			if (modus_current_index == 7) seconds = seconds / 2.0; // STEREO
 			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(to_string(pcmcount));
 			this->audio_out_textBox->Text += " PCM samples in ";
-			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(seconds), 2));
-			this->audio_out_textBox->Text += " s";
+			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(seconds), 2)) + " s";
 		}
 	}
 
@@ -790,7 +792,8 @@ namespace Morseform
 		this->WPM_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)wpm));
 		this->SPS_textbox->Text = msclr::interop::marshal_as<System::String^>(to_string((int)sps));
 	}
-	private: string trimDecimals(const std::string& s, int decimals)
+	private: 
+	string trimDecimals(const std::string& s, int decimals)
 	{
 		int pos = s.find('.');
 		if (pos == std::string::npos) return s;
@@ -798,12 +801,14 @@ namespace Morseform
 		if (end >= s.size()) return s;
 		return s.substr(0, end);
 	}
-	wstring StringToWString(const string& str)
+	// generate random integer between 100 and 9999
+	int randinteger() 
 	{
-		int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), NULL, 0);
-		wstring wstrTo(size_needed, 0);
-		MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), &wstrTo[0], size_needed);
-		return wstrTo;
+		static std::random_device rd;
+		static std::mt19937 gen(rd());
+		static std::uniform_int_distribution<int> dist(100, 9999);
+		return dist(gen);
 	}
+
 	};
 }
