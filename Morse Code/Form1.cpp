@@ -612,6 +612,7 @@ namespace Morseform
 			this->audio_out_textBox->Text += "tone: " + t + " Hz(-tone: " + t + ")\r\n";
 			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
 			double seconds = (double)pcmcount / (double)sps;
+			if (modus_current_index == 7) seconds = seconds / 2.0; // STEREO
 			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(to_string(pcmcount));
 			this->audio_out_textBox->Text += " PCM samples in ";
 			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(seconds), 2));
