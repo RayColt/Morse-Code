@@ -74,7 +74,7 @@ namespace Morseform
 		System::Windows::Forms::ProgressBar^ audio_progressbar;
 		int modus_current_index = 0;
 		double tone_hz = 880.0;
-		int wpm = 30;
+		int wpm = 33;
 		int sps = 44100;
 		double Eps;
 		double Bit;
