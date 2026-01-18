@@ -48,6 +48,22 @@ MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, dou
 }
 
 /**
+* Get GetPcmCount
+*/
+long MorseWav::GetPcmCount()
+{
+    return PcmCount;
+}
+
+/**
+* Get GetWaveSize
+*/
+long MorseWav::GetWaveSize()
+{
+    return WaveSize;
+}
+
+/**
 * Get binary morse code (dit/dah) for a given character.
 * Generate one quantum of silence or tone in PCM/WAV array.
 * sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate

@@ -520,7 +520,7 @@ namespace Morseform
 	{
 		string morse = "";
 		String^ str = "";
-		if (modus_current_index == 1 || modus_current_index == 2 || modus_current_index == 7 || modus_current_index == 8)
+		if (modus_current_index == 1 || modus_current_index == 2)
 		{
 			// create from new lines two spaces, as between words
 			for (int i = 0; i < this->main_textbox->Lines->Length; i++)
@@ -567,6 +567,7 @@ namespace Morseform
 	{
 		string morse = "";
 		String^ str = "";
+
 		if (modus_current_index == 7 || modus_current_index == 8) 
 		{
 			// create from new lines two spaces, as between words
@@ -582,17 +583,21 @@ namespace Morseform
 			string filename = "morse_";
 			filename += to_string(time(NULL));
 			filename += ".wav";
+			long pcmcount;
+
 			if (modus_current_index == 7) // STEREO
 			{
 				// a direct construction of the MorseWav object
 				// avoids the temporary and avoids shallow copying
 				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 2);
+				pcmcount = mw.GetPcmCount() * 2;
 			}
 			else if (modus_current_index == 8) // MONO
 			{
 				// a direct construction of the MorseWav object
 				// avoids the temporary and avoids shallow copying
 				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 1);
+				pcmcount = mw.GetPcmCount();
 			}
 			// Note 60 seconds = 1 minute and 50 elements = 1 morse word.
 			Eps = wpm / 1.2;    // elements per second (frequency of morse coding)
@@ -606,6 +611,11 @@ namespace Morseform
 			this->audio_out_textBox->Text += "wave: " + w + " Hz(-sps: " + w + ")\r\n";
 			this->audio_out_textBox->Text += "tone: " + t + " Hz(-tone: " + t + ")\r\n";
 			this->audio_out_textBox->Text += "code: " + e + " Hz(-wpm: " + c + ")\r\n";
+			double seconds = (double)pcmcount / (double)sps;
+			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(to_string(pcmcount));
+			this->audio_out_textBox->Text += " PCM samples in ";
+			this->audio_out_textBox->Text += msclr::interop::marshal_as<System::String^>(trimDecimals(to_string(seconds), 2));
+			this->audio_out_textBox->Text += " s";
 		}
 	}
 
@@ -786,6 +796,13 @@ namespace Morseform
 		int end = pos + 1 + decimals;
 		if (end >= s.size()) return s;
 		return s.substr(0, end);
+	}
+	wstring StringToWString(const string& str)
+	{
+		int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), NULL, 0);
+		wstring wstrTo(size_needed, 0);
+		MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), &wstrTo[0], size_needed);
+		return wstrTo;
 	}
 	};
 }

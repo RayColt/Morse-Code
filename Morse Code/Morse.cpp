@@ -196,7 +196,7 @@ string Morse::morse_decode(string str)
 	}
 	else
 	{
-		return error_in;
+		return "INPUT-ERROR";
 	}
 }
 
@@ -252,7 +252,7 @@ string Morse::hexdecimal_bin_txt(string str, int modus)
 	}
 	else
 	{
-		return error_in;
+		return "INPUT-ERROR";
 	}
 }
 

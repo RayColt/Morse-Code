@@ -46,6 +46,16 @@ public:
 	MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus);
 	~MorseWav() = default;
 
+	/**
+	* Get GetWaveSize
+	*/
+	long GetWaveSize();
+
+	/**
+	* Get GetPcmCount
+	*/
+	long GetPcmCount();
+
 private:
 	/**
 	* Write wav file
