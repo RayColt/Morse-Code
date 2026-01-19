@@ -1,7 +1,6 @@
 ﻿#include "morsewav.h"
 #include <shellapi.h>
 #pragma comment(lib, "Shell32.lib")
-#include <thread>
 
 using namespace std;
 
@@ -27,8 +26,7 @@ MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, dou
 
     this->MorseTones(MorseCode);
     this->WriteWav(filename, pcm);
-   // thread t1([this, filename] { this->WriteWav(filename, pcm); });
-   // t1.join();
+    //thread t1([this, filename] { this->WriteWav(filename, pcm); });
 
     long pcmcount = PcmCount * NumChannels;
     double seconds = (double)PcmCount / (double)Sps;
