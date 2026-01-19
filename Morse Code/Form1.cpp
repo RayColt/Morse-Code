@@ -7,6 +7,7 @@
 #include "MorseWav.h"
 #include "Form2.cpp"
 #include "Form3.cpp"
+
 /**
 * C++ Morse Form
 *
@@ -448,7 +449,6 @@ namespace Morseform
 			this->text_modus_groupbox->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 #pragma endregion
 	private: System::Void modus_listBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
@@ -589,15 +589,15 @@ namespace Morseform
 			if (modus_current_index == 7) // STEREO
 			{
 				// a direct construction of the MorseWav object
-				// avoids the temporary and avoids shallow copying
-				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 2);
+				// avoids shallow copying
+				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 2);		
 				pcmcount = mw.GetPcmCount() * 2;
 				wavsize = mw.GetWaveSize();
 			}
 			else if (modus_current_index == 8) // MONO
 			{
 				// a direct construction of the MorseWav object
-				// avoids the temporary and avoids shallow copying
+				// avoids shallow copying
 				MorseWav mw(morse.c_str(), filename.c_str(), tone_hz, wpm, sps, 1);
 				pcmcount = mw.GetPcmCount();
 				wavsize = mw.GetWaveSize();

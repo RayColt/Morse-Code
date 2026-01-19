@@ -1,6 +1,7 @@
 ﻿#include "morsewav.h"
 #include <shellapi.h>
 #pragma comment(lib, "Shell32.lib")
+#include <thread>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ using namespace std;
 */
 MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus)
 {
-    string fp = SaveDir + filename;
+    string fp = SaveDir + filename;;
 	MorseCode = morsecode;
 	NumChannels = modus;
 	Wpm = wpm;
@@ -20,16 +21,22 @@ MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, dou
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
     Bit = 1.2 / Wpm;    // seconds per element (period of morse coding)
 
-    printf("wave: %9.3lf Hz (-sps:%lg)\n", Sps, Sps);
-    printf("tone: %9.3lf Hz (-tone:%lg)\n", Tone, Tone);
-    printf("code: %9.3lf Hz (-wpm:%lg)\n", Eps, Wpm);
+    cout << "wave: " << Sps << " Hz (-sps:" << Sps << ")\n";
+    cout << "tone: " << Tone << " Hz (-hz:" << Tone << ")\n";
+    cout << "code: " << Eps << " Hz (-wpm:" << Wpm << ")\n";
 
-    MorseWav::MorseTones(MorseCode);
-    MorseWav::WriteWav(filename, pcm);
+    this->MorseTones(MorseCode);
+    this->WriteWav(filename, pcm);
+   // thread t1([this, filename] { this->WriteWav(filename, pcm); });
+   // t1.join();
 
-    printf("%ld PCM samples", PcmCount);
-    printf(" (%.1lf s @ %.1lf kHz)", (double)PcmCount / Sps, Sps / 1e3);
-    printf(" written to %s (%.1f kB)\n", fp.c_str(), WaveSize / 1024.0);
+    long pcmcount = PcmCount * NumChannels;
+    double seconds = (double)PcmCount / (double)Sps;
+    string s = to_string(seconds);
+
+    cout << pcmcount << " PCM samples in ";
+    cout << seconds << " s @ " << Sps << " kHz" << "\n";
+    cout << " written to " << fp << " (" << (WaveSize / 1024.0) << " kB)" << "\n";
 
     if (1)
     {

@@ -1,5 +1,4 @@
 #include "morse.h"
-#include "morsewav.h"
 #include "help.h"
 /**
 * C++ Morse Class

@@ -97,4 +97,3 @@ private:
 	*/
 	void MorseTones(const char* code);
 };
-
