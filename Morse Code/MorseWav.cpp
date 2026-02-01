@@ -9,7 +9,7 @@ using namespace std;
 */
 MorseWav::MorseWav(const char* morsecode, const char* filename, double tone, double wpm, double samples_per_second, int modus)
 {
-    string fp = SaveDir + filename;;
+    string fp = SaveDir + filename;
 	MorseCode = morsecode;
 	NumChannels = modus;
 	Wpm = wpm;
