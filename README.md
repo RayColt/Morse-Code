@@ -2,7 +2,7 @@
 current version: 1.19
 
 
-A windows version of <a href="https://github.com/RayColt/MorseCmdWin">console C++ morse of this app</a>. <br>Listen to homemade morse files with, for example, the android ggmorse app:
+A Win32 + Console version of <a href="https://github.com/RayColt/MorseWInt"> this app</a>. <br>Listen to homemade morse files with, for example, the android ggmorse app:
 <br>
 <img src=https://github.com/RayColt/morse/blob/master/cpp/colt-morse.jpg>  
 
