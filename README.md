@@ -9,7 +9,7 @@ current version: 1.19
 The real, first and only US Morse mapping,<br>
       based upon Synthesizer Binary tables, from a mouse his vocal cords I believe,<br>
 or just a military  algorithm:-):<br />
-        <b>We removed the first number one(0b1 aka Obi-Wan, it became my nick name I was 4 years old, they used the name in Star Wars to honor morse code),
+        <b>We removed the first number one(0b1)
         reversed it(think Endian/IBM PowerPC) 
         to save Data and CPU's in war times. Its even URL Save.<br>
 <a href="https://raycolt.github.io/morse/">WORKING HTML EXAMPLE</a><br>
