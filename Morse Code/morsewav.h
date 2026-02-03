@@ -38,6 +38,8 @@ private:
 	long PcmCount = 0;         // number of PCM samples
 	long WaveSize = 0;         // size of the wave file in bytes
 	double Amplitude = 0.8;    // 80% of max volume (0.0 to 1.0)
+	// oscillator state for phase continuity between successive Tones() calls
+	double phase = 0.0;
 
 public:
 	/**
